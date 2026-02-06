@@ -1,13 +1,17 @@
-import { forwardRef } from "react";
-import Editor, { type EditorRefActions } from "../Editor";
+import type { Editor as TipTapEditorType } from "@tiptap/react";
+import { forwardRef, useState } from "react";
+import type { EditorRefActions } from "../Editor";
+import TipTapEditor from "../Editor/TipTapEditor";
 import { useBlobUrls, useDragAndDrop } from "../hooks";
 import { useEditorContext } from "../state";
 import type { EditorContentProps } from "../types";
 import type { LocalFile } from "../types/attachment";
+import { MarkdownToolbar } from "./MarkdownToolbar";
 
 export const EditorContent = forwardRef<EditorRefActions, EditorContentProps>(({ placeholder }, ref) => {
   const { state, actions, dispatch } = useEditorContext();
   const { createBlobUrl } = useBlobUrls();
+  const [tiptapEditor, setTiptapEditor] = useState<TipTapEditorType | null>(null);
 
   const { dragHandlers } = useDragAndDrop((files: FileList) => {
     const localFiles: LocalFile[] = Array.from(files).map((file) => ({
@@ -55,8 +59,8 @@ export const EditorContent = forwardRef<EditorRefActions, EditorContentProps>(({
   };
 
   return (
-    <div className="w-full flex flex-col flex-1" {...dragHandlers}>
-      <Editor
+    <div className="w-full min-w-0 flex flex-col flex-1" {...dragHandlers}>
+      <TipTapEditor
         ref={ref}
         className="memo-editor-content"
         initialContent={state.content}
@@ -67,7 +71,9 @@ export const EditorContent = forwardRef<EditorRefActions, EditorContentProps>(({
         onPaste={handlePaste}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
+        onEditorReady={setTiptapEditor}
       />
+      <MarkdownToolbar editor={tiptapEditor} />
     </div>
   );
 });

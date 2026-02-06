@@ -8,4 +8,5 @@ export { FocusModeExitButton, FocusModeOverlay } from "./FocusModeOverlay";
 export { LinkMemoDialog } from "./LinkMemoDialog";
 export { LocationDialog } from "./LocationDialog";
 export { default as LocationDisplay } from "./LocationDisplay";
+export { MarkdownToolbar } from "./MarkdownToolbar";
 export { default as RelationList } from "./RelationList";

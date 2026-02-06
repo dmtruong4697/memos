@@ -4,6 +4,8 @@ import type { EditorRefActions } from "../Editor";
 import type { Command } from "../Editor/commands";
 import type { LocationState } from "./insert-menu";
 
+export type { EditorRefActions } from "../Editor";
+
 export interface MemoEditorProps {
   className?: string;
   cacheKey?: string;
